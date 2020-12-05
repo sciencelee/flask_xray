@@ -1,24 +1,11 @@
-
 import os, sys, time
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory
 from werkzeug.utils import secure_filename
-
-#from scipy.misc import imsave, imread, imresize
-#import numpy as np
-import keras.models
-#import re
-
-
 from keras.models import load_model
 import numpy as np
 from keras.preprocessing import image
-from werkzeug.datastructures import FileStorage
-
-
-
 
 model = load_model('model/chest_xray_cnn_100_801010.h5')
-
 
 UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + '/static/uploads'
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif'}
@@ -59,10 +46,6 @@ def index():
             #process_file(os.path.join(app.config['UPLOAD_FOLDER'], filename), filename)
             # after processing, we just redirect back to the
             filepath = app.root_path + '/static/uploads/' + filename
-
-            time.sleep(2)
-            #redirect(url_for('uploaded_file', filename=filename))
-
             test_image = image.load_img(filepath, target_size=(150, 150))
             test_image = image.img_to_array(test_image)
             test_image = np.expand_dims(test_image, axis=0)
@@ -76,17 +59,8 @@ def index():
 
             return render_template('index.html', filename=filename, pred=pred, result=result)  # pass whatever we need to populate index
 
-    #print(os.listdir(UPLOAD_FOLDER), flush=True) # returns list
     return render_template('index.html')  # pass whatever we need to populate index
 
-
-def process_file(path, filename):
-    pass
-    # good time to open the file ... open(path, 'rb') or whatever
-    # could make an output file to downloads and treat it as below
-    # output = open(filename, 'w')
-    # output_stream = open(app.config['DOWNLOAD_FOLDER'] + filename, 'wb')
-    # output.write(output_stream)
 
 
 @app.route('/uploads/<filename>')
@@ -97,4 +71,3 @@ def uploaded_file(filename):
 
 if __name__ == '__main__':
     app.run()
-
