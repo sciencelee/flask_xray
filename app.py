@@ -1,11 +1,10 @@
-import os, sys, time
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory
 from werkzeug.utils import secure_filename
-from keras.models import load_model
 import numpy as np
-from keras.preprocessing import image
+import keras
+import os
 
-model = load_model('model/chest_xray_cnn_100_801010.h5')
+model = keras.models.load_model('model/chest_xray_cnn_100_801010.h5')
 
 UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + '/static/uploads'
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif'}
@@ -25,6 +24,7 @@ def allowed_file(filename):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+
     print(os.getcwd(), flush=True)
     if request.method == 'POST':
         #print("POST", flush=True)
@@ -46,8 +46,8 @@ def index():
             #process_file(os.path.join(app.config['UPLOAD_FOLDER'], filename), filename)
             # after processing, we just redirect back to the
             filepath = app.root_path + '/static/uploads/' + filename
-            test_image = image.load_img(filepath, target_size=(150, 150))
-            test_image = image.img_to_array(test_image)
+            test_image = keras.preprocessing.image.load_img(filepath, target_size=(150, 150))
+            test_image = keras.preprocessingimage.img_to_array(test_image)
             test_image = np.expand_dims(test_image, axis=0)
             result = model.predict(test_image)
             if result[0][0] >= 0.5:
