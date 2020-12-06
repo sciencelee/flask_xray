@@ -41,7 +41,7 @@ def index():
             # after processing, we just redirect back to the
             filepath = app.root_path + '/static/uploads/' + filename
             test_image = keras.preprocessing.image.load_img(filepath, target_size=(150, 150))
-            test_image = keras.preprocessingimage.img_to_array(test_image)
+            test_image = keras.preprocessing.image.img_to_array(test_image)
             test_image = np.expand_dims(test_image, axis=0)
             result = model.predict(test_image)
             if result[0][0] >= 0.5:
