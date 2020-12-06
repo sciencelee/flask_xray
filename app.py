@@ -4,7 +4,6 @@ import numpy as np
 import keras
 import os
 
-model = keras.models.load_model('model/chest_xray_cnn_100_801010.h5')
 
 UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + '/static/uploads'
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif'}
@@ -24,23 +23,18 @@ def allowed_file(filename):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    model = keras.models.load_model('model/chest_xray_cnn_100_801010.h5')
 
-    print(os.getcwd(), flush=True)
     if request.method == 'POST':
-        #print("POST", flush=True)
         if 'file' not in request.files:
-            print('No file attached in request', flush=True)
             return redirect(request.url)
         file = request.files['file']
 
         if file.filename == '':
-            print('No file selected', flush=True)
             return redirect(request.url)
         if file and allowed_file(file.filename):
             # next line prevents hacking tricks with uploaded files accessing bash (The more you know***)
             filename = secure_filename(file.filename)
-            print(file, flush=True)
-            #myfile = FileStorage(request.stream).save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
 
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) # save copy of file!!!!
             #process_file(os.path.join(app.config['UPLOAD_FOLDER'], filename), filename)
