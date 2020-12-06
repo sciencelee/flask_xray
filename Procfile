@@ -1,4 +1,4 @@
-web: gunicorn app:apphero
+web: gunicorn app:app
 
 
 
