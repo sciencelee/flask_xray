@@ -2,6 +2,6 @@ Flask==1.1.2
 Jinja2==2.11.2
 Keras==2.4.3
 Keras-Preprocessing==1.1.2
-Werkzeug==0.15,
+Werkzeug==0.1,
 requests==0.11.1
 gunicorn
