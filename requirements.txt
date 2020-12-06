@@ -5,5 +5,4 @@ Keras-Preprocessing==1.1.2
 numpy
 Werkzeug==0.8.3
 requests==0.11.1
-Pillow==8.01
 gunicorn
