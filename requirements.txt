@@ -1,6 +1,6 @@
 Flask==1.1.2
 Jinja2==2.11.2
-gunicorn
+gunicorn==0.14.2
 Keras==2.4.3
 Keras-Preprocessing==1.1.2
 numpy
