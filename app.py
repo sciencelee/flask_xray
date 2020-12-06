@@ -4,6 +4,7 @@ import numpy as np
 import keras
 import os
 
+model = keras.models.load_model('model/chest_xray_cnn_100_801010.h5')
 
 UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + '/static/uploads'
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif'}
@@ -23,7 +24,6 @@ def allowed_file(filename):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    model = keras.models.load_model('model/chest_xray_cnn_100_801010.h5')
 
     if request.method == 'POST':
         if 'file' not in request.files:
